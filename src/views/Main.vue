@@ -1,7 +1,7 @@
 <template>
     <v-container fluid fill-height class="page-background-color align-start justify-center">
       <div>
-        <h1 class="display-3 font-weight-bold theme-blue-text my-6">Stock Market Stats</h1>
+        <h1 class="display-3 font-weight-bold white--text my-6">Stock Market Stats</h1>
         <search-bar></search-bar>
       </div>
     </v-container>
