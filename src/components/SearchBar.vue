@@ -29,8 +29,13 @@ import axios from "axios";
  * Retrieves data from yahoo finance about the ticker the user inputted.
  */
 function getTickerData() {
+  let domain = document.URL.includes("localhost")
+    ? "http://localhost:8080/"
+    : "https://query1.finance.yahoo.com/"
+    //: "https://chadm8.github.io/stock-market-stats-website/";
   let url =
-    "http://localhost:8080/v7/finance/download/" +
+    domain +
+    "v7/finance/download/" +
     this.ticker +
     "?period1=0000000000&period2=9999999999&interval=1d&events=history&includeAdjustedClose=true";
   axios.get(url).then((response) => {
