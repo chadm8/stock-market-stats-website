@@ -20,5 +20,10 @@ npm run build
 npm run lint
 ```
 
+### Deploying to production using GitHub Pages (https://chadm8.github.io/stock-market-stats-website/)
+```
+npm run deploy
+```
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
