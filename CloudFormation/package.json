@@ -1,0 +1,31 @@
+{
+  "name": "intern-lab-stack",
+  "version": "1.0.0",
+  "private": true,
+  "description": "intern-lab-stack API",
+  "author": "Case Consulting",
+  "scripts": {
+    "build": "sam build -t CloudFormation.yaml",
+    "deploy:dev": "npm run build && npm run package:dev && npm run deploy:packaged:dev",
+    "deploy:packaged:dev": "sam deploy --template-file packaged.yaml --region us-east-1 --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM --s3-bucket case-consulting-sam-deployments --s3-prefix intern-lab-stack-dev --stack-name intern-lab-stack-dev --parameter-overrides Stage=dev",
+    "eslint": "eslint . --ext .js --ignore-path .jshintignore --fix",
+    "package:dev": "sam package --s3-bucket case-consulting-sam-deployments --s3-prefix intern-lab-stack-dev --output-template-file packaged.yaml",
+    "precommit": "npm run eslint",
+    "reinstall": "npm ci && cd get-submission && npm ci cd ../create-submission npm ci",
+    "test": "jasmine",
+    "validate": "npm ls",
+    "lint": "jshint .",
+    "testLocal": "node testLocalScript.js"
+  },
+  "devDependencies": {
+    "aws-sdk": "2.715.0",
+    "dotenv": "^8.2.0",
+    "eslint": "7.16.0",
+    "jasmine": "3.6.3",
+    "precommit-hook": "3.0.0"
+  },
+  "pre-commit": [
+    "eslint",
+    "validate"
+  ]
+}
