@@ -20,9 +20,9 @@ npm run build
 npm run lint
 ```
 
-### Deploying to production using GitHub Pages (https://chadm8.github.io/stock-market-stats-website/)
+### Deploying using AWS Amplify (https://dev.d1q0jo4gy0w1p4.amplifyapp.com/)
 ```
-npm run deploy
+amplify publish
 ```
 
 ### Customize configuration
