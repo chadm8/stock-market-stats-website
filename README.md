@@ -20,9 +20,9 @@ npm run build
 npm run lint
 ```
 
-### Deploying to website (https://d333clpnsnf5gd.cloudfront.net/)
+### Deploying to website (http://stock-market-stats.s3-website-us-east-1.amazonaws.com/ OR https://d333clpnsnf5gd.cloudfront.net/)
 ```
-npm run deploy:prod
+npm run deploy
 ```
 
 ### Customize configuration
