@@ -20,9 +20,9 @@ npm run build
 npm run lint
 ```
 
-### Deploying using AWS Amplify (https://dev.d1q0jo4gy0w1p4.amplifyapp.com/)
+### Deploying to website (https://d333clpnsnf5gd.cloudfront.net/)
 ```
-amplify publish
+npm run deploy:prod
 ```
 
 ### Customize configuration
