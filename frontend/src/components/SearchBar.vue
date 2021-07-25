@@ -137,9 +137,6 @@ export default {
   watch: {
     search: function() {
       this.changeItemList();
-    },
-    showMenu: function() {
-      console.log(this.showMenu);
     }
   },
 };

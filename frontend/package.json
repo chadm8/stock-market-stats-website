@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "deploy:prod": "vue-cli-service build && grunt deploy:prod"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -32,7 +33,9 @@
     "ticks-to-date": "^1.0.3",
     "vue-cli-plugin-vuetify": "~2.4.1",
     "vue-template-compiler": "^2.6.11",
-    "vuetify-loader": "^1.7.0"
+    "vuetify-loader": "^1.7.0",
+    "grunt": "1.3.0",
+    "grunt-aws-s3": "2.0.2"
   },
   "eslintConfig": {
     "root": true,
