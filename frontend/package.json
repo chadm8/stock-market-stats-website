@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "deploy:prod": "vue-cli-service build && grunt deploy:prod"
+    "deploy": "vue-cli-service build && grunt deploy:prod"
   },
   "dependencies": {
     "axios": "^0.21.1",
