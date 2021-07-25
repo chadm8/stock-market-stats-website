@@ -8,13 +8,14 @@
       @click="showMenu = !showMenu"
       @click:append="submit"
       color="rgb(71, 98, 255)"
+      @input.native="search = $event.srcElement.value"
       @keypress="showMenu = true"
       @keyup.enter="submit"
       @keyup.delete="showMenu = true"
-      hide-details
+      hide-no-data
       :items="items"
       label="Enter any ticker..."
-      :menu-props="{ openOnClick: false, value: showMenu }"
+      :menu-props="{ dark: true, value: showMenu, closeOnContentClick: true }"
       outlined
       rounded
       single-line
@@ -23,29 +24,67 @@
 </template>
 
 <script>
-import axios from "axios";
+const axios = require("axios").default;
+const moment = require("moment");
+
+function changeItemList() {
+  var options = {
+    method: "GET",
+    url: "https://apidojo-yahoo-finance-v1.p.rapidapi.com/auto-complete",
+    params: { q: this.search, region: "US" },
+    headers: {
+      "x-rapidapi-key": "0196190081msh5691f396f7a82afp1fe7c1jsnd873e64d3b6e",
+      "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
+    },
+  };
+
+  axios
+    .request(options)
+    .then((response) => {
+      let list = [];
+      response.data.quotes.forEach((quote) => {
+        list.push(`${quote.symbol} - ${quote.shortname}`);
+      });
+      this.updateItems(list);
+    })
+    .catch(function(error) {
+      console.error(error);
+    });
+}
 
 /**
  * Retrieves data from yahoo finance about the ticker the user inputted.
  */
 function getTickerData() {
-  let domain = document.URL.includes("localhost")
-    ? "http://localhost:8080/"
-    : "https://query1.finance.yahoo.com/"
-    //: "https://chadm8.github.io/stock-market-stats-website/";
-  let url =
-    domain +
-    "v7/finance/download/" +
-    this.ticker +
-    "?period1=0000000000&period2=9999999999&interval=1d&events=history&includeAdjustedClose=true";
-  axios.get(url).then((response) => {
-    let data = response.data.split("\n");
-    data.forEach((row) => {
-      let line = row.split(",");
-      this.tickerData.push({ date: line[0], open: line[1], close: line[4] });
+  let options = {
+    method: "GET",
+    url:
+      "https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-historical-data",
+    params: {
+      period1: "000000000000", // gets first day of stock data
+      period2: "999999999999", // gets most recent day for stock data
+      symbol: this.ticker,
+      frequency: "1d", // 1 day interval
+      filter: "history",
+    },
+    headers: {
+      "x-rapidapi-key": "0196190081msh5691f396f7a82afp1fe7c1jsnd873e64d3b6e",
+      "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
+    },
+  };
+
+  axios
+    .request(options)
+    .then((response) => {
+      console.log(response.data);
+      response.data.prices.forEach((day) => {
+        let date = moment.unix(day.date).format("YYYY-MM-DD"); // convert seconds to date
+        date;
+      });
+    })
+    .catch((error) => {
+      console.error(error);
     });
-  });
-  console.log(this.tickerData);
 }
 
 /**
@@ -59,6 +98,10 @@ function submit(ev) {
   // make sure to deal with case where use clicks the search bar (ev will be different)
   this.ticker = this.tickerInfo.split(" - ")[0]; // get the actual ticker ('AAPL - Apple Inc.' -> 'AAPL')
   this.getTickerData();
+}
+
+function updateItems(list) {
+  this.items = list;
 }
 
 export default {
@@ -78,6 +121,7 @@ export default {
     return {
       items: [],
       loading: false,
+      search: "",
       showMenu: false,
       ticker: "",
       tickerInfo: "",
@@ -85,8 +129,18 @@ export default {
     };
   },
   methods: {
+    changeItemList,
     getTickerData,
     submit,
+    updateItems,
+  },
+  watch: {
+    search: function() {
+      this.changeItemList();
+    },
+    showMenu: function() {
+      console.log(this.showMenu);
+    }
   },
 };
 </script>

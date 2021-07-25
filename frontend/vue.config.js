@@ -3,6 +3,6 @@ module.exports = {
     'vuetify'
   ],
   devServer: {
-    proxy: 'https://query1.finance.yahoo.com/'
+    proxy: 'https://query1.finance.yahoo.com/',
   }
 };
